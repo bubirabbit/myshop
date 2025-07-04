@@ -1,0 +1,59 @@
+{% extends 'products/base.html' %}
+{% load static %}
+
+{% block title %}關於我們 | 咘比兔手工披薩{% endblock %}
+
+{% block content %}
+  <style>
+    .about-banner {
+      background-image: url("{% static 'images/about.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .about-banner h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+
+    .about-image {
+      width: 100%;
+      max-width: 1000px;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      margin: 5px auto 30px; /* ✅ 上方間距小、下方保留空間 */
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  </style>
+
+  <div class="about-banner">
+    <h1>關於咘比</h1>
+  </div>
+
+  <!-- ✅ 新增圖片區塊 -->
+  <img src="{% static 'images/about-detail.png' %}" alt="關於我們圖片" class="about-image mt-3">
+
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <h2 class="mb-4">很久以前，有隻不愛麵邊的兔子名曰「咘比」。</h2>
+        <h2 class="mb-4">每當市井賣餅之人吆喝叫賣</h2>
+        <h2 class="mb-4">咘比總皺眉搖頭</h2>
+        <h2 class="mb-4">道：「餅邊太乾，餡料太少，焉能滿足腹中饞意？」</h2>
+        <h2 class="mb-4">遂於自家小廚研製一餅</h2>
+        <h2 class="mb-4">不留乾邊，只留精華，取名曰：沒邊界披薩。</h2>
+        <h2 class="mb-4">今日，咘比兔將此秘方公諸於世</h2>
+        <h2 class="mb-4">願天下饑忙之人，不出門亦得一口暖餅，一家皆歡。</h2>
+      </div>
+    </div>
+  </div>
+{% endblock %}

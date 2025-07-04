@@ -1,0 +1,79 @@
+{% extends 'products/base.html' %}
+{% load static %}
+{% block title %}{{ product.name }} | 咘比兔手工披薩{% endblock %}
+
+{% block content %}
+
+<style>
+  .btn-outline-momo {
+    color: #c0392b;
+    border: 1px solid #c0392b;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .btn-outline-momo:hover {
+    background-color: #c0392b;
+    color: #ffffff;
+  }
+
+  .btn-outline-shopee {
+    color: #d63200;
+    border: 1px solid #d63200;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .btn-outline-shopee:hover {
+    background-color: #d63200;
+    color: #ffffff;
+  }
+</style>
+
+<div class="container py-5">
+  <div class="row align-items-center">
+
+    <!-- ✅ 左邊：商品圖片區塊 -->
+    <div class="col-md-6 text-center mb-4 mb-md-0">
+      {% if product.image %}
+      <div class="p-2 bg-white rounded shadow d-inline-block">
+        <img src="{{ product.image.url }}" 
+             class="img-fluid rounded"
+             style="max-height: 420px; object-fit: contain;" 
+             alt="{{ product.name }}">
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- ✅ 右邊：商品資訊 -->
+    <div class="col-md-6">
+      <h2 class="fw-bold mb-2" style="font-size: 1.75rem;">{{ product.name }}</h2>
+      <p class="fw-bold fs-3 mb-3" style="color: #d35400;">NT${{ product.price|floatformat:0 }}</p>
+
+      <p class="text-muted" style="line-height: 1.8;">
+        {{ product.description }}
+      </p>
+
+      <div class="d-flex gap-3 mt-4">
+        <!-- MOMO 購物網按鈕 -->
+        <a href="#" class="btn btn-outline-momo d-flex align-items-center gap-2 px-3 py-2" style="min-width: 180px;">
+          <img src="{% static 'images/momoicon.png' %}" alt="MOMO" style="height: 24px;">
+          前往 MOMO 購買
+        </a>
+      
+        <!-- 7-11 賣貨便按鈕 -->
+        <a href="https://myship.7-11.com.tw/general/detail/GM2410175333975" class="btn btn-outline-success d-flex align-items-center gap-2 px-3 py-2" style="min-width: 180px;">
+          <img src="{% static 'images/711icon.png' %}" alt="7-11" style="height: 24px;">
+          前往 7-11 賣貨便
+        </a>
+
+        <!-- 蝦皮購物按鈕 -->
+        <a href="https://shopee.tw/cherish202499" class="btn btn-outline-shopee d-flex align-items-center gap-2 px-3 py-2" style="min-width: 180px;">
+          <img src="{% static 'images/shopeeicon.png' %}" alt="Shopee" style="height: 24px;">
+          前往蝦皮購買
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
