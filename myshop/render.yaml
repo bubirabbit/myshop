@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: myshop-web
+    env: python
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate
+    startCommand: gunicorn myshop.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: myshop.settings
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: False
+      - key: ALLOWED_HOSTS
+        value: myshop.onrender.com
