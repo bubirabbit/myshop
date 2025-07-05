@@ -1,13 +1,14 @@
 from pathlib import Path
 import os
+import dj_database_url  # ✅ 加這行！
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-r+k^tkbj&(qn2l+4ry@7@ccn(rt4f1z2cqhs=blmk*0jzsmt$*'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-本地開發用的secret')
 
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'  # ✅ 部署環境請設為 False
 
-ALLOWED_HOSTS = ['*']  # ⚠️ 部署後請改為正式網域名稱
+ALLOWED_HOSTS = ['*']  # ✅ 部署後建議改成你自己的網域，例如 'yourdomain.com'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -17,10 +18,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'products',
+    # 其他 APP...
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ 加這行讓靜態檔案在 Render 正常運作
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -48,11 +51,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myshop.wsgi.application'
 
+# ✅ 資料庫設定：支援 Render 提供的 DATABASE_URL
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
+        conn_max_age=600
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -70,20 +74,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'zh-hant'  # 調整為繁體中文
-TIME_ZONE = 'Asia/Taipei'  # 台灣時區
-
+LANGUAGE_CODE = 'zh-hant'
+TIME_ZONE = 'Asia/Taipei'
 USE_I18N = True
 USE_TZ = True
 
 # ✅ 靜態檔案設定（CSS、JS）
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # collectstatic 時生成的路徑
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # ✅ for Render 靜態檔案
 
-# ✅ 媒體檔案設定（上傳圖片等）
+# ✅ 媒體檔案（圖片）
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
