@@ -48,9 +48,16 @@
       <h2 class="fw-bold mb-2" style="font-size: 1.75rem;">{{ product.name }}</h2>
       <p class="fw-bold fs-3 mb-3" style="color: #d35400;">NT${{ product.price|floatformat:0 }}</p>
 
-      <p class="text-muted" style="line-height: 1.8;">
+      <!-- ✅ 商品描述區塊，已優化排版 -->
+      <div style="
+        line-height: 1.9;
+        font-size: 1.05rem;
+        color: #555;
+        white-space: pre-line;
+        margin-bottom: 1.5rem;
+      ">
         {{ product.description }}
-      </p>
+      </div>
 
       <div class="d-flex gap-3 mt-4">
         <!-- MOMO 購物網按鈕 -->
@@ -58,7 +65,7 @@
           <img src="{% static 'images/momoicon.png' %}" alt="MOMO" style="height: 24px;">
           前往 MOMO 購買
         </a>
-      
+
         <!-- 7-11 賣貨便按鈕 -->
         <a href="https://myship.7-11.com.tw/general/detail/GM2410175333975" class="btn btn-outline-success d-flex align-items-center gap-2 px-3 py-2" style="min-width: 180px;">
           <img src="{% static 'images/711icon.png' %}" alt="7-11" style="height: 24px;">

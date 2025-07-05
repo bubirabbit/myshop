@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: myshop-web
+    name: bubirabbit
     env: python
     plan: free
     buildCommand: |
