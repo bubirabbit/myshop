@@ -19,3 +19,9 @@ media/
 # macOS & Windows
 .DS_Store
 Thumbs.db
+
+../.venv/
+../104.py
+untime.txt.txt
+../products/
+../star.py

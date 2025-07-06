@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 import dj_database_url  # ✅ 加這行！
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-本地開發用的secret')
@@ -18,6 +19,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'products',
+    'cloudinary',            # Cloudinary 主套件
+    'cloudinary_storage',    # Cloudinary Storage（如果有用）,
     # 其他 APP...
 ]
 
@@ -53,10 +56,10 @@ WSGI_APPLICATION = 'myshop.wsgi.application'
 
 # ✅ 資料庫設定：支援 Render 提供的 DATABASE_URL
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -81,12 +84,18 @@ USE_TZ = True
 
 # ✅ 靜態檔案設定（CSS、JS）
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # ✅ for Render 靜態檔案
 
-# ✅ 媒體檔案（圖片）
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# ✅ Cloudinary 設定
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
